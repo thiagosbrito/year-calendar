@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Yearly Calendar</title>
+
+  <!-- build:css stylesheets/application.css -->
+    <link rel="stylesheet" href="stylesheets/application.css">
+    <link rel="stylesheet" href="bower_components/bootstrap/docs/assets/css/bootstrap.css">
+  <!-- endbuild -->
+
+  <!-- build:js javascripts/application.js -->
+    <script type="text/javascript" src="bower_components/jquery/jquery.js"></script>
+    <script type="text/javascript" src="bower_components/bootstrap/docs/assets/js/bootstrap.js"></script>
+    <script type="text/javascript" src="bower_components/underscore/underscore-min.js"></script>
+    <script type="text/javascript" src="bower_components/moment/min/moment.min.js"></script>
+    <script type="text/javascript" src="javascripts/application.js"></script>
+  <!-- endbuild -->
+</head>
+<body>
+	<h1 class="text-center">YEARLY CALENDAR <br><small>@thiagosbrito</small></h1>
+	<div class="row">
+		<div class="container">
+			
+			<!-- CALENDAR -->
+
+				<div class="row-fluid">
+					<div id="yr-calendar-container" class="span12">
+						<div id="yr-calendar-header" class="well clearfix no-radius affix-top">
+							<div class="span5">
+								<button class="btn"><i class="icon-chevron-left"></i></button>
+								<select class="fix-select span3">
+								  <option>2010</option>
+								  <option>2011</option>
+								  <option>2012</option>
+								  <option>2013</option>
+								  <option>2014</option>
+								  <option selected>2015</option>
+								  <option>2016</option>
+								  <option>2017</option>
+								</select>
+								<button class="btn"><i class="icon-chevron-right"></i></button>
+							</div>
+							<div class="span7">
+								<div class="btn-group pull-right" id="yr-calendar-period-buttons">
+						      <button class="btn active">
+						        <i class="icon-calendar"></i>
+						      </button>
+						      <button class="btn">
+						        <i class="icon-th-list"></i>
+						      </button>
+						    </div>
+								<div class="btn-group pull-right">
+									<button class="btn">Mensal</button>
+									<button class="btn">Trimestre</button>
+									<button class="btn">Semestre</button>
+									<button class="btn active">Ano</button>
+								</div>
+							</div>
+						</div>
+						<div id="yr-calendar-months-list">
+							<div class="month-item-header-list">Janeiro</div>
+							<div class="month-item-header-list">Fevereiro</div>
+							<div class="month-item-header-list">Março</div>
+							<div class="month-item-header-list">Abril</div>
+							<div class="month-item-header-list">Maio</div>
+							<div class="month-item-header-list">Junho</div>
+							<div class="month-item-header-list">Julho</div>
+							<div class="month-item-header-list">Agosto</div>
+							<div class="month-item-header-list">Setembro</div>
+							<div class="month-item-header-list">Outubro</div>
+							<div class="month-item-header-list">Novembro</div>
+							<div class="month-item-header-list">Dezembro</div>
+						</div>
+						<div id="yr-calendar-months-grid">
+							<div class="month-item-grid">
+								<!-- <div class="month-weeks-grid"></div>
+								<div class="month-weeks-grid"></div>
+								<div class="month-weeks-grid"></div>
+								<div class="month-weeks-grid"></div> -->
+							</div>
+							<div class="month-item-grid">
+								<!-- <div class="month-weeks-grid"></div>
+								<div class="month-weeks-grid"></div>
+								<div class="month-weeks-grid"></div>
+								<div class="month-weeks-grid"></div> -->
+							</div>
+							<div class="month-item-grid">
+								<!-- <div class="month-weeks-grid"></div>
+								<div class="month-weeks-grid"></div>
+								<div class="month-weeks-grid"></div>
+								<div class="month-weeks-grid"></div> -->
+							</div>
+							<div class="month-item-grid">
+								<!-- <div class="month-weeks-grid"></div>
+								<div class="month-weeks-grid"></div>
+								<div class="month-weeks-grid"></div>
+								<div class="month-weeks-grid"></div> -->
+							</div>
+							<div class="month-item-grid">
+								<!-- <div class="month-weeks-grid"></div>
+								<div class="month-weeks-grid"></div>
+								<div class="month-weeks-grid"></div>
+								<div class="month-weeks-grid"></div> -->
+							</div>
+							<div class="month-item-grid">
+								<!-- <div class="month-weeks-grid"></div>
+								<div class="month-weeks-grid"></div>
+								<div class="month-weeks-grid"></div>
+								<div class="month-weeks-grid"></div> -->
+							</div>
+							<div class="month-item-grid">
+								<!-- <div class="month-weeks-grid"></div>
+								<div class="month-weeks-grid"></div>
+								<div class="month-weeks-grid"></div>
+								<div class="month-weeks-grid"></div> -->
+							</div>
+							<div class="month-item-grid">
+								<!-- <div class="month-weeks-grid"></div>
+								<div class="month-weeks-grid"></div>
+								<div class="month-weeks-grid"></div>
+								<div class="month-weeks-grid"></div> -->
+							</div>
+							<div class="month-item-grid">
+								<!-- <div class="month-weeks-grid"></div>
+								<div class="month-weeks-grid"></div>
+								<div class="month-weeks-grid"></div>
+								<div class="month-weeks-grid"></div> -->
+							</div>
+							<div class="month-item-grid">
+								<!-- <div class="month-weeks-grid"></div>
+								<div class="month-weeks-grid"></div>
+								<div class="month-weeks-grid"></div>
+								<div class="month-weeks-grid"></div> -->
+							</div>
+							<div class="month-item-grid">
+								<!-- <div class="month-weeks-grid"></div>
+								<div class="month-weeks-grid"></div>
+								<div class="month-weeks-grid"></div>
+								<div class="month-weeks-grid"></div> -->
+							</div>
+							<div class="month-item-grid">
+								<!-- <div class="month-weeks-grid"></div>
+								<div class="month-weeks-grid"></div>
+								<div class="month-weeks-grid"></div>
+								<div class="month-weeks-grid"></div> -->
+							</div>
+						</div>
+						<div id="yr-calendar-schedules-canvas"></div>
+					</div>
+				</div>
+
+			<!-- END of CALENDAR -->
+
+		</div>
+	</div>
+</body>
+</html>
