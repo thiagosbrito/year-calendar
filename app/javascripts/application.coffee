@@ -70,16 +70,17 @@ setProperPositions = (items)->
 
     $('#calendar-item-'+key).popover({
       placement: (tip, element) ->
-        offset          = $(element).offset()
-        height          = holder.height()
-        width           = holder.width()
-        vert            = 2 * height - offset.top
-        vertPlacement   = if vert > 0 then 'bottom' else 'top'
-        horiz           = 2 * width - offset.left
-        horizPlacement  = if horiz > 0 then 'right' else 'left'
-        placement       = if Math.abs(horiz) > Math.abs(vert) then horizPlacement else vertPlacement
+        offset = $(element).offset()
+        height = $('#yr-calendar-schedules-canvas').outerHeight()
+        width = $('#yr-calendar-schedules-canvas').outerWidth()
+        vert = 2 * height - (offset.top)
+        vertPlacement = if vert > 0 then 'bottom' else 'top'
+        horiz = 0.5 * width - (offset.left)
+        horizPlacement = if horiz > 0 then 'right' else 'left'
+        placement = if Math.abs(horiz) > Math.abs(vert) then horizPlacement else vertPlacement
         placement
-      html: true
+      html: true,
+      trigger: 'hover'
     })
 
 
