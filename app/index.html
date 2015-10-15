@@ -51,102 +51,66 @@
 						      </button>
 						    </div>
 								<div class="btn-group pull-right">
-									<button class="btn">Mensal</button>
-									<button class="btn">Trimestre</button>
-									<button class="btn">Semestre</button>
-									<button class="btn active">Ano</button>
+									<button class="btn btn-yr-calendar" data-view-mode="monthly">Mensal</button>
+									<button class="btn btn-yr-calendar" data-view-mode="quarterly">Trimestre</button>
+									<button class="btn btn-yr-calendar" data-view-mode="half-yearly">Semestre</button>
+									<button class="btn btn-yr-calendar active" data-view-mode="yearly">Ano</button>
 								</div>
 							</div>
 						</div>
-						<div id="yr-calendar-months-list">
-							<div class="month-item-header-list">Janeiro</div>
-							<div class="month-item-header-list">Fevereiro</div>
-							<div class="month-item-header-list">Março</div>
-							<div class="month-item-header-list">Abril</div>
-							<div class="month-item-header-list">Maio</div>
-							<div class="month-item-header-list">Junho</div>
-							<div class="month-item-header-list">Julho</div>
-							<div class="month-item-header-list">Agosto</div>
-							<div class="month-item-header-list">Setembro</div>
-							<div class="month-item-header-list">Outubro</div>
-							<div class="month-item-header-list">Novembro</div>
-							<div class="month-item-header-list">Dezembro</div>
+						<div class="yr-calendar-spot yr-calendar-yearly">
+							<div id="yr-calendar-months-list">
+								<div class="month-item-header-list yearly">Janeiro</div>
+								<div class="month-item-header-list yearly">Fevereiro</div>
+								<div class="month-item-header-list yearly">Março</div>
+								<div class="month-item-header-list yearly">Abril</div>
+								<div class="month-item-header-list yearly">Maio</div>
+								<div class="month-item-header-list yearly">Junho</div>
+								<div class="month-item-header-list yearly">Julho</div>
+								<div class="month-item-header-list yearly">Agosto</div>
+								<div class="month-item-header-list yearly">Setembro</div>
+								<div class="month-item-header-list yearly">Outubro</div>
+								<div class="month-item-header-list yearly">Novembro</div>
+								<div class="month-item-header-list yearly">Dezembro</div>
+							</div>
+							<div id="yr-calendar-months-grid">
+								<div class="month-item-grid"></div>
+								<div class="month-item-grid"></div>
+								<div class="month-item-grid"></div>
+								<div class="month-item-grid"></div>
+								<div class="month-item-grid"></div>
+								<div class="month-item-grid"></div>
+								<div class="month-item-grid"></div>
+								<div class="month-item-grid"></div>
+								<div class="month-item-grid"></div>
+								<div class="month-item-grid"></div>
+								<div class="month-item-grid"></div>
+								<div class="month-item-grid"></div>
+							</div>
+							<div id="yr-calendar-schedules-canvas"></div>
 						</div>
-						<div id="yr-calendar-months-grid">
-							<div class="month-item-grid">
-								<!-- <div class="month-weeks-grid"></div>
-								<div class="month-weeks-grid"></div>
-								<div class="month-weeks-grid"></div>
-								<div class="month-weeks-grid"></div> -->
-							</div>
-							<div class="month-item-grid">
-								<!-- <div class="month-weeks-grid"></div>
-								<div class="month-weeks-grid"></div>
-								<div class="month-weeks-grid"></div>
-								<div class="month-weeks-grid"></div> -->
-							</div>
-							<div class="month-item-grid">
-								<!-- <div class="month-weeks-grid"></div>
-								<div class="month-weeks-grid"></div>
-								<div class="month-weeks-grid"></div>
-								<div class="month-weeks-grid"></div> -->
-							</div>
-							<div class="month-item-grid">
-								<!-- <div class="month-weeks-grid"></div>
-								<div class="month-weeks-grid"></div>
-								<div class="month-weeks-grid"></div>
-								<div class="month-weeks-grid"></div> -->
-							</div>
-							<div class="month-item-grid">
-								<!-- <div class="month-weeks-grid"></div>
-								<div class="month-weeks-grid"></div>
-								<div class="month-weeks-grid"></div>
-								<div class="month-weeks-grid"></div> -->
-							</div>
-							<div class="month-item-grid">
-								<!-- <div class="month-weeks-grid"></div>
-								<div class="month-weeks-grid"></div>
-								<div class="month-weeks-grid"></div>
-								<div class="month-weeks-grid"></div> -->
-							</div>
-							<div class="month-item-grid">
-								<!-- <div class="month-weeks-grid"></div>
-								<div class="month-weeks-grid"></div>
-								<div class="month-weeks-grid"></div>
-								<div class="month-weeks-grid"></div> -->
-							</div>
-							<div class="month-item-grid">
-								<!-- <div class="month-weeks-grid"></div>
-								<div class="month-weeks-grid"></div>
-								<div class="month-weeks-grid"></div>
-								<div class="month-weeks-grid"></div> -->
-							</div>
-							<div class="month-item-grid">
-								<!-- <div class="month-weeks-grid"></div>
-								<div class="month-weeks-grid"></div>
-								<div class="month-weeks-grid"></div>
-								<div class="month-weeks-grid"></div> -->
-							</div>
-							<div class="month-item-grid">
-								<!-- <div class="month-weeks-grid"></div>
-								<div class="month-weeks-grid"></div>
-								<div class="month-weeks-grid"></div>
-								<div class="month-weeks-grid"></div> -->
-							</div>
-							<div class="month-item-grid">
-								<!-- <div class="month-weeks-grid"></div>
-								<div class="month-weeks-grid"></div>
-								<div class="month-weeks-grid"></div>
-								<div class="month-weeks-grid"></div> -->
-							</div>
-							<div class="month-item-grid">
-								<!-- <div class="month-weeks-grid"></div>
-								<div class="month-weeks-grid"></div>
-								<div class="month-weeks-grid"></div>
-								<div class="month-weeks-grid"></div> -->
+						<div class="yr-calendar-spot yr-calendar-half-yearly">
+							<div id="yr-calendar-months-list">
+								<div class="month-item-header-list half-yearly">Julho</div>
+								<div class="month-item-header-list half-yearly">Agosto</div>
+								<div class="month-item-header-list half-yearly">Setembro</div>
+								<div class="month-item-header-list half-yearly">Outubro</div>
+								<div class="month-item-header-list half-yearly">Novembro</div>
+								<div class="month-item-header-list half-yearly">Dezembro</div>
 							</div>
 						</div>
-						<div id="yr-calendar-schedules-canvas"></div>
+						<div class="yr-calendar-spot yr-calendar-quarterly">
+							<div id="yr-calendar-months-list">
+								<div class="month-item-header-list quarterly">Outubro</div>
+								<div class="month-item-header-list quarterly">Novembro</div>
+								<div class="month-item-header-list quarterly">Dezembro</div>
+							</div>
+						</div>
+						<div class="yr-calendar-spot yr-calendar-monthly">
+							<div id="yr-calendar-months-list">
+								<div class="month-item-header-list monthly">Outubro</div>
+							</div>
+						</div>
 					</div>
 				</div>
 

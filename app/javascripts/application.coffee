@@ -9,10 +9,6 @@ eventos = [
 # calcular o inicio de cada item
 monthPos = 
   positions: []
-
-$ ->
-  do getInitPos
-
 # PEGA O MESMO DO EVENTO
 getInitPos = ()->
 
@@ -82,6 +78,19 @@ setProperPositions = (items)->
       html: true,
       trigger: 'hover'
     })
+
+$ ->
+  do getInitPos
+
+  changeCalendarView = ()->
+    $('.btn-yr-calendar').removeClass('active')
+    $(@).addClass('active')
+    mode = $(@).data('view-mode')
+    $('.yr-calendar-spot').hide()
+    $('.yr-calendar-'+mode).show()
+
+  $('.btn-yr-calendar').click(changeCalendarView)
+
 
 
   
