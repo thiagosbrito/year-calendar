@@ -19,9 +19,13 @@
     minMonth = 0
     maxMonth = 11
 
+    viewMode = settings.period
+
     year = moment().year()
     minYear = year - settings.gapYears
     maxYear = year + settings.gapYears
+
+    listMonths = moment.months()
 
     # templates definitions
     $templateHeader               = null
@@ -55,18 +59,22 @@
 
       # by default the calendar its always open in a calendar view instead of list view
       $(this).append $templateHeader
+
       # remove active class for all buttons
       $templateHeader.find('.btn-yr-calendar').removeClass 'active'
       $templateHeader.find('.t-view').removeClass 'active'
+
       # set active the setting comming from plugin instatiate 
       $templateHeader.find('[data-period='+settings.period+']').addClass('active')
       $templateHeader.find('[data-type='+settings.view+']').addClass('active')
+
       # verify the settings values to render the proper views
       if settings.view is 'calendar'
         if settings.period is 'yearly'
           $templateHeader.find('.yr-calendar-spot').append $templateCalendarYearly
         if settings.period is 'monthly'
           $templateHeader.find('.yr-calendar-spot').append $templateCalendarMonthly
+          buildDates()
         if settings.period is 'half-yearly'
           $templateHeader.find('.yr-calendar-spot').append $templateCalendarHalfYearly
         if settings.period is 'quarterly'
@@ -85,6 +93,18 @@
           $templateHeader.find('.yr-calendar-spot').append $templateListQuarterly
           instantiateDatatables settings.period
 
+    buildDates = ()=>
+      if viewMode is 'quarterly'
+        quarter = moment().quarter()
+        months = listMonths.slice (quarter - 1)*3,quarter*3
+        buildDatesTemplate(months)
+
+    buildDatesTemplate = (list)=>
+      $(".header-#{settings.period}").empty()
+      for month in list
+        $(".header-#{settings.period}").append "<div class='dyn month-item-header-list #{settings.period}'>#{month}</div>"
+      return
+        
     createSelect = ()=>
       curYear   = moment().year()
       prevYear  = curYear - settings.gapYears
@@ -164,8 +184,10 @@
 
     navigateBetweenDates = (direction)=>
       # for month view
-      if settings.period is 'monthly'
+      if viewMode is 'monthly'
+
         if verifyYear(direction)
+
           if direction is 'prev'
 
             month = $('.month-item-header-list').html()
@@ -179,20 +201,48 @@
           if direction is 'next'
             
             month = $('.month-item-header-list').html()
-
             intMonth = parseInt(moment().locale('pt-br').month(month).format('MM')) - 1
             nextMonth = intMonth + 1
             stringMonth = moment().locale('pt-br').month(nextMonth).format('MMMM')
             $('.month-item-header-list').html(stringMonth)
             adjustSelect nextMonth
             $('.prev').get(0).disabled = false
-          
+
+      if viewMode is 'quarterly'
+
+        if direction is 'prev'
+
+          firstMonthOfQuarter = moment().month($('.header-quarterly').children().first().html()).quarter()
+          pos = firstMonthOfQuarter - 1
+          if pos < 1
+            pos = 4
+          months = listMonths.slice (pos - 1)*3,pos*3
+          buildDatesTemplate(months)
+          month = $('.header-quarterly').children().first().html()
+          intMonth = parseInt moment().locale('pt-br').month(month).format('MM') - 1
+          prevMonth = intMonth - 1
+          adjustSelect prevMonth
+
+        if direction is 'next'
+
+          firstMonthOfQuarter = moment().month($('.header-quarterly').children().first().html()).quarter()
+          pos = firstMonthOfQuarter + 1
+          if pos > 4
+            pos = 1
+          months = listMonths.slice (pos - 1)*3,pos*3
+          buildDatesTemplate(months)
+          month = $('.header-quarterly').children().first().html()
+          intMonth = parseInt(moment().locale('pt-br').month(month).format('MM')) - 1
+          nextMonth = intMonth + 1
+          adjustSelect nextMonth
+
     # changes the view and re-render the proper template for each view
     renderView = (d)=>
       if d.data().control is 'view'
 
         $templateHeader.find('.t-view').removeClass 'active'
         period  = $templateHeader.find('.btn-yr-calendar.active').data('period')
+        viewMode = period
         $(this.prevObject[0].activeElement).addClass 'active'
 
         if d.data().control is 'view' and d.data('type') is 'calendar'
@@ -225,6 +275,7 @@
         $(this.prevObject[0].activeElement).addClass 'active'
 
         view = $templateHeader.find('#yr-calendar-period-buttons .active').data().type
+        viewMode = d.data().period
         if view is 'calendar'
           if d.data().period is 'yearly'
             $templateHeader.find('.yr-calendar-spot').empty().append $templateCalendarYearly
@@ -264,6 +315,7 @@
     init = ->
       cacheDom()
       buildTemplate()
+      buildDates()
       instantiateDatatables()
       listeners()
       createSelect()

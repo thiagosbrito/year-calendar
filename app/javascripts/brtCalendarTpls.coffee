@@ -86,11 +86,7 @@ window.templates = {
 	# QUARTER CALENDAR
 	'calendar-quarterly' 	: '
 		<div class="calendar-spot">
-			<div id="yr-calendar-months-list">
-				<div class="month-item-header-list quarterly">Outubro</div>
-				<div class="month-item-header-list quarterly">Novembro</div>
-				<div class="month-item-header-list quarterly">Dezembro</div>
-			</div>
+			<div id="yr-calendar-months-list" class="header-quarterly"></div>
 			<div id="yr-calendar-months-grid">
 				<div class="month-item-grid quarterly"></div>
 				<div class="month-item-grid quarterly"></div>
