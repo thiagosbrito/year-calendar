@@ -6,7 +6,10 @@
     "jquery": "~2.0.0",
     "underscore": "~1.8.3",
     "moment": "~2.10.6",
-    "bootstrap": "~2.3.2"
+    "bootstrap": "~2.3.2",
+    "fullcalendar": "~2.4.0",
+    "handlebars": "~4.0.3",
+    "datatables": "~1.10.9"
   },
   "devDependencies": {}
 }

@@ -3,7 +3,7 @@ module.exports =
     files: ['app/stylesheets/{,*/}*.{scss,sass}']
     tasks: ['sass:dist']
   coffee:
-    files: ['app/javascripts/{,*/}*.coffee']
+    files: ['app/javascripts/**/*.coffee']
     tasks: ['coffee:dist']
   livereload:
     options:

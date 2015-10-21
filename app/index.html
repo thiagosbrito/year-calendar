@@ -7,14 +7,23 @@
   <!-- build:css stylesheets/application.css -->
     <link rel="stylesheet" href="stylesheets/application.css">
     <link rel="stylesheet" href="bower_components/bootstrap/docs/assets/css/bootstrap.css">
+    <link rel="stylesheet" href="bower_components/datatables/media/css/jquery.dataTables.css">
+    <link rel="stylesheet" href="bower_components/fullcalendar/dist/fullcalendar.css">
+    <!-- <link rel="stylesheet" href="bower_components/datatables/media/css/dataTables.bootstrap.css"> -->
   <!-- endbuild -->
 
   <!-- build:js javascripts/application.js -->
+  	<script type="text/javascript" src="bower_components/handlebars/handlebars.min.js"></script>
     <script type="text/javascript" src="bower_components/jquery/jquery.js"></script>
     <script type="text/javascript" src="bower_components/bootstrap/docs/assets/js/bootstrap.js"></script>
     <script type="text/javascript" src="bower_components/underscore/underscore-min.js"></script>
-    <script type="text/javascript" src="bower_components/moment/min/moment.min.js"></script>
+    <script type="text/javascript" src="bower_components/moment/min/moment-with-locales.min.js"></script>
+    <script type="text/javascript" src="bower_components/datatables/media/js/jquery.dataTables.js"></script>
+    <script type="text/javascript" src="bower_components/fullcalendar/dist/fullcalendar.js"></script>
+    <script type="text/javascript" src="bower_components/fullcalendar/dist/lang/pt-br.js"></script>
     <script type="text/javascript" src="javascripts/application.js"></script>
+    <script type="text/javascript" src="javascripts/brtCalendarTpls.js"></script>
+    <script type="text/javascript" src="javascripts/brtCalendar.js"></script>
   <!-- endbuild -->
 </head>
 <body>
@@ -23,97 +32,9 @@
 		<div class="container">
 			
 			<!-- CALENDAR -->
-
 				<div class="row-fluid">
-					<div id="yr-calendar-container" class="span12">
-						<div id="yr-calendar-header" class="well clearfix no-radius affix-top">
-							<div class="span5">
-								<button class="btn"><i class="icon-chevron-left"></i></button>
-								<select class="fix-select span3">
-								  <option>2010</option>
-								  <option>2011</option>
-								  <option>2012</option>
-								  <option>2013</option>
-								  <option>2014</option>
-								  <option selected>2015</option>
-								  <option>2016</option>
-								  <option>2017</option>
-								</select>
-								<button class="btn"><i class="icon-chevron-right"></i></button>
-							</div>
-							<div class="span7">
-								<div class="btn-group pull-right" id="yr-calendar-period-buttons">
-						      <button class="btn active">
-						        <i class="icon-calendar"></i>
-						      </button>
-						      <button class="btn">
-						        <i class="icon-th-list"></i>
-						      </button>
-						    </div>
-								<div class="btn-group pull-right">
-									<button class="btn btn-yr-calendar" data-view-mode="monthly">Mensal</button>
-									<button class="btn btn-yr-calendar" data-view-mode="quarterly">Trimestre</button>
-									<button class="btn btn-yr-calendar" data-view-mode="half-yearly">Semestre</button>
-									<button class="btn btn-yr-calendar active" data-view-mode="yearly">Ano</button>
-								</div>
-							</div>
-						</div>
-						<div class="yr-calendar-spot yr-calendar-yearly">
-							<div id="yr-calendar-months-list">
-								<div class="month-item-header-list yearly">Janeiro</div>
-								<div class="month-item-header-list yearly">Fevereiro</div>
-								<div class="month-item-header-list yearly">Março</div>
-								<div class="month-item-header-list yearly">Abril</div>
-								<div class="month-item-header-list yearly">Maio</div>
-								<div class="month-item-header-list yearly">Junho</div>
-								<div class="month-item-header-list yearly">Julho</div>
-								<div class="month-item-header-list yearly">Agosto</div>
-								<div class="month-item-header-list yearly">Setembro</div>
-								<div class="month-item-header-list yearly">Outubro</div>
-								<div class="month-item-header-list yearly">Novembro</div>
-								<div class="month-item-header-list yearly">Dezembro</div>
-							</div>
-							<div id="yr-calendar-months-grid">
-								<div class="month-item-grid"></div>
-								<div class="month-item-grid"></div>
-								<div class="month-item-grid"></div>
-								<div class="month-item-grid"></div>
-								<div class="month-item-grid"></div>
-								<div class="month-item-grid"></div>
-								<div class="month-item-grid"></div>
-								<div class="month-item-grid"></div>
-								<div class="month-item-grid"></div>
-								<div class="month-item-grid"></div>
-								<div class="month-item-grid"></div>
-								<div class="month-item-grid"></div>
-							</div>
-							<div id="yr-calendar-schedules-canvas"></div>
-						</div>
-						<div class="yr-calendar-spot yr-calendar-half-yearly">
-							<div id="yr-calendar-months-list">
-								<div class="month-item-header-list half-yearly">Julho</div>
-								<div class="month-item-header-list half-yearly">Agosto</div>
-								<div class="month-item-header-list half-yearly">Setembro</div>
-								<div class="month-item-header-list half-yearly">Outubro</div>
-								<div class="month-item-header-list half-yearly">Novembro</div>
-								<div class="month-item-header-list half-yearly">Dezembro</div>
-							</div>
-						</div>
-						<div class="yr-calendar-spot yr-calendar-quarterly">
-							<div id="yr-calendar-months-list">
-								<div class="month-item-header-list quarterly">Outubro</div>
-								<div class="month-item-header-list quarterly">Novembro</div>
-								<div class="month-item-header-list quarterly">Dezembro</div>
-							</div>
-						</div>
-						<div class="yr-calendar-spot yr-calendar-monthly">
-							<div id="yr-calendar-months-list">
-								<div class="month-item-header-list monthly">Outubro</div>
-							</div>
-						</div>
-					</div>
+					<div class="calendario-anual"></div>
 				</div>
-
 			<!-- END of CALENDAR -->
 
 		</div>
