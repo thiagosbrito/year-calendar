@@ -94,15 +94,16 @@
           instantiateDatatables settings.period
 
     buildDates = ()=>
-      if viewMode is 'quarterly'
+      # if viewMode is 'quarterly'
         quarter = moment().quarter()
         months = listMonths.slice (quarter - 1)*3,quarter*3
         buildDatesTemplate(months)
+        return
 
     buildDatesTemplate = (list)=>
-      $(".header-#{settings.period}").empty()
+      $(".header-#{viewMode}").empty()
       for month in list
-        $(".header-#{settings.period}").append "<div class='dyn month-item-header-list #{settings.period}'>#{month}</div>"
+        $(".header-#{viewMode}").append "<div class='dyn month-item-header-list #{viewMode}'>#{month}</div>"
       return
         
     createSelect = ()=>
@@ -140,6 +141,11 @@
     
       $('#list-'+period).DataTable(options)
 
+    instantiateFullcalendar = ()->
+      $('.month-calendar').fullCalendar({
+        header: false
+      })
+      return
     verifyYear = (direction)->
 
       # $prevEl = $('.prev')
@@ -197,6 +203,7 @@
             $('.month-item-header-list').html(stringMonth)
             adjustSelect prevMonth
             $('.next').get(0).disabled = false
+            $('.month-calendar').fullCalendar('prev')
 
           if direction is 'next'
             
@@ -207,6 +214,7 @@
             $('.month-item-header-list').html(stringMonth)
             adjustSelect nextMonth
             $('.prev').get(0).disabled = false
+            $('.month-calendar').fullCalendar('next')
 
       if viewMode is 'quarterly'
 
@@ -248,26 +256,38 @@
         if d.data().control is 'view' and d.data('type') is 'calendar'
           if period is 'yearly'
             $templateHeader.find('.yr-calendar-spot').empty().append $templateCalendarYearly
+            return
           if period is 'half-yearly'
             $templateHeader.find('.yr-calendar-spot').empty().append $templateCalendarHalfYearly
+            return
           if period is 'quarterly'
             $templateHeader.find('.yr-calendar-spot').empty().append $templateCalendarQuarterly
+            buildDates()
+            return
           if period is 'monthly'
             $templateHeader.find('.yr-calendar-spot').empty().append $templateCalendarMonthly
+            instantiateFullcalendar()
+            return
+          return
           
         if d.data().control is 'view' and d.data('type') is 'list'
           if period is 'yearly'
             $templateHeader.find('.yr-calendar-spot').empty().append $templateListYearly
             instantiateDatatables period
+            return
           if period is 'half-yearly'
             $templateHeader.find('.yr-calendar-spot').empty().append $templateListHalfYearly
             instantiateDatatables period
+            return
           if period is 'quarterly'
             $templateHeader.find('.yr-calendar-spot').empty().append $templateListQuarterly
             instantiateDatatables period
+            return
           if period is 'monthly'
             $templateHeader.find('.yr-calendar-spot').empty().append $templateListMonthly
             instantiateDatatables period
+            return
+          return
 
       if d.data().control is 'period'
 
@@ -283,8 +303,10 @@
             $templateHeader.find('.yr-calendar-spot').empty().append $templateCalendarHalfYearly
           if d.data().period is 'quarterly'
             $templateHeader.find('.yr-calendar-spot').empty().append $templateCalendarQuarterly
+            buildDates()
           if d.data().period is 'monthly'
             $templateHeader.find('.yr-calendar-spot').empty().append $templateCalendarMonthly
+            instantiateFullcalendar()
         if view is 'list'
           if d.data().period is 'yearly'
             $templateHeader.find('.yr-calendar-spot').empty().append $templateListYearly
@@ -305,9 +327,11 @@
       $templateHeader.find('button').click ()->
         d = $(@)
         renderView d
+        return
       $templateHeader.find('.nav-dates').click ()->
         b = $(@)
         navigateBetweenDates b.data().direction
+        return
 
       return
 
@@ -317,6 +341,7 @@
       buildTemplate()
       buildDates()
       instantiateDatatables()
+      instantiateFullcalendar()
       listeners()
       createSelect()
 

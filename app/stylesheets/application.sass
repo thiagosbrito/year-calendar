@@ -19,58 +19,59 @@
 	width: 100%
 	display: block
 	height: 50px
-	border-bottom: 2px solid #ddd
+	border-bottom: 1px solid #ddd
 	margin-top: -2px
 	overflow: hidden
 	.month-item-header-list
 		float: left
 		text-align: center
 		padding: 15px 0
-		border-right: 2px solid #ddd
+		border-right: 1px solid #ddd
 		text-transform: capitalize
 		&:first-child
-			border-left: 2px solid #ddd
+			border-left: 1px solid #ddd
 	.yearly
-		width: 8.10%
+		width: 8.215%
 	.half-yearly
-		width: 16.41%
+		width: 16.54%
 		&.sw
 			&:nth-last-child(6n+6)
-				border-left: 2px solid #ddd
+				border-left: 1px solid #ddd
 	.quarterly
-		width: 33.05%
+		width: 33.15%
 		&.sw
 			&:nth-last-child(3n+3)
-				border-left: 2px solid #ddd
+				border-left: 1px solid #ddd
 	.monthly
-		width: 99.6%
-		border-right: 2px solid #ddd
+		width: 99.75%
+		border-right: 1px solid #ddd
 		&.sw
 			&:nth-last-child(1n+1)
-				border-left: 2px solid #ddd
+				border-left: 1px solid #ddd
 
 #yr-calendar-months-grid 
 	width: 100%
-	height: 550px
-	border-bottom: 2px solid #ddd
+	height: 582px
+	border-bottom: 1px solid #ddd
+	overflow: hidden
 	.month-item-grid 
 		float: left
 		height: 100%
 		display: block
-		border-right: 2px solid #ddd
+		border-right: 1px solid #ddd
 		&:first-child 
-			border-left: 2px solid #ddd
+			border-left: 1px solid #ddd
 		&:last-child 
-			border-right: 2px solid #ddd
+			border-right: 1px solid #ddd
 	.yearly
-		width: 8.10%
+		width: 8.215%
 	.half-yearly
-		width: 16.41%
+		width: 16.54%
 	.quarterly
-		width: 33.05%
+		width: 33.15%
 	.monthly
-		width: 99.6%
-		border-right: 2px solid #ddd
+		width: 99.75%
+		border-right: 1px solid #ddd
 #yr-calendar-schedules-canvas
 	width: 100%
 	height: 554px
@@ -97,3 +98,6 @@
 	height: auto
 	max-height: auto
 	display: block
+
+.fc-view-container 
+	margin-top: -1px

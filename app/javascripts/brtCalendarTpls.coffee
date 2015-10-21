@@ -101,7 +101,7 @@ window.templates = {
 			<div id="yr-calendar-months-list">
 				<div class="month-item-header-list monthly">Outubro</div>
 			</div>
-			<div id="yr-calendar-months-grid"></div>
+			<div id="yr-calendar-months-grid" class="month-calendar"></div>
 		</div>
 	'
 	# List templates 
