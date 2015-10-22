@@ -186,11 +186,11 @@
           return validYear = no
 
       if viewMode is 'half-yearly'
-        if $('.header-quarterly').children().first().html() is 'janeiro' and numYear is minYear and direction is 'prev'
+        if $('.header-half-yearly').children().first().html() is 'janeiro' and numYear is minYear and direction is 'prev'
           $('.prev').get(0).disabled = true
           return validYear = no
 
-        if $('.header-quarterly').children().first().html() is 'julho' and numYear is maxYear and direction is 'next'
+        if $('.header-half-yearly').children().first().html() is 'julho' and numYear is maxYear and direction is 'next'
           $('.next').get(0).disabled = true
           return validYear = no
 
@@ -231,7 +231,10 @@
           $('#year-select')[0].selectedIndex = $('#year-select')[0].selectedIndex + 1
 
       if viewMode is 'half-yearly'
-        console.log month
+        if direction is 'prev' and month is 12
+          $('#year-select')[0].selectedIndex = $('#year-select')[0].selectedIndex - 1
+        if direction is 'next' and month is 0
+          $('#year-select')[0].selectedIndex = $('#year-select')[0].selectedIndex + 1
 
       return
 
@@ -298,12 +301,10 @@
 
           if direction is 'prev'
 
-            $('.prev').get(0).disabled = false
+            $('.next').get(0).disabled = false
             firstMonthOfQuarter = moment().month($('.header-half-yearly').children().first().html()).quarter()
-            pos = firstMonthOfQuarter + 1
-            if pos > 7
-              pos = 1
-            months = listMonths.slice (pos - 1)*6,pos*6
+            half = if firstMonthOfQuarter <= 2 then 2 else 1
+            months = listMonths.slice (half - 1)*6,half*6
             buildDatesTemplate(months)
             month = $('.header-half-yearly').children().first().html()
             intMonth = parseInt(moment().locale('pt-br').month(month).format('MM')) - 1
@@ -312,16 +313,14 @@
 
           if direction is 'next'
 
-            $('.next').get(0).disabled = false
+            $('.prev').get(0).disabled = false
             firstMonthOfQuarter = moment().month($('.header-half-yearly').children().first().html()).quarter()
-            pos = firstMonthOfQuarter - 1
-            if pos < 1
-              pos = 7
-            months = listMonths.slice (pos - 1)*6,pos*6
+            half = if firstMonthOfQuarter <= 2 then 2 else 1
+            months = listMonths.slice (half - 1)*6,half*6
             buildDatesTemplate(months)
             month = $('.header-half-yearly').children().first().html()
             intMonth = parseInt moment().locale('pt-br').month(month).format('MM') - 1
-            prevMonth = intMonth - 6
+            prevMonth = intMonth
             adjustSelect prevMonth, direction
 
     # changes the view and re-render the proper template for each view
