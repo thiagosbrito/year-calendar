@@ -177,14 +177,20 @@
       totOpts   = $('#year-select option').length
       firstOpt  = $('#year-select option').first().html()
       lastOpt   = $('#year-select option').last().html()
-      
-      if month > max
-        index = index + 1
-        $('#year-select')[0].selectedIndex = index
 
-      if month < min
-        index = index - 1
-        $('#year-select')[0].selectedIndex = index
+      if viewMode is 'monthly'
+      
+        if month > max
+          index = index + 1
+          $('#year-select')[0].selectedIndex = index
+
+        if month < min
+          index = index - 1
+          $('#year-select')[0].selectedIndex = index
+
+      if viewMode is 'quarterly'
+
+        console.log month
 
       return
 
@@ -228,7 +234,7 @@
           buildDatesTemplate(months)
           month = $('.header-quarterly').children().first().html()
           intMonth = parseInt moment().locale('pt-br').month(month).format('MM') - 1
-          prevMonth = intMonth - 1
+          prevMonth = intMonth - 3
           adjustSelect prevMonth
 
         if direction is 'next'
@@ -241,7 +247,7 @@
           buildDatesTemplate(months)
           month = $('.header-quarterly').children().first().html()
           intMonth = parseInt(moment().locale('pt-br').month(month).format('MM')) - 1
-          nextMonth = intMonth + 1
+          nextMonth = intMonth + 3
           adjustSelect nextMonth
 
     # changes the view and re-render the proper template for each view
