@@ -30,7 +30,7 @@ $ ->
   $('.calendario-anual').brtCalendar({
     data: eventosYear,
     gapYears: 1,
-    period: 'monthly',
+    period: 'half-yearly',
     view: 'calendar'
   })
   return

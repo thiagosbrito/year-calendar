@@ -30,19 +30,7 @@ window.templates = {
 	# YEARLY CALENDAR
 	'calendar-yearly' 		: '
 		<div class="calendar-spot">
-			<div id="yr-calendar-months-list">
-				<div class="month-item-header-list yearly">Janeiro</div>
-				<div class="month-item-header-list yearly">Fevereiro</div>
-				<div class="month-item-header-list yearly">Março</div>
-				<div class="month-item-header-list yearly">Abril</div>
-				<div class="month-item-header-list yearly">Maio</div>
-				<div class="month-item-header-list yearly">Junho</div>
-				<div class="month-item-header-list yearly">Julho</div>
-				<div class="month-item-header-list yearly">Agosto</div>
-				<div class="month-item-header-list yearly">Setembro</div>
-				<div class="month-item-header-list yearly">Outubro</div>
-				<div class="month-item-header-list yearly">Novembro</div>
-				<div class="month-item-header-list yearly">Dezembro</div>
+			<div id="yr-calendar-months-list" class="header-yearly">
 			</div>
 			<div id="yr-calendar-months-grid">
 				<div class="month-item-grid yearly"></div>
@@ -64,13 +52,7 @@ window.templates = {
 	# HALF YEAR CALENDAR
 	'calendar-half-yearly': '
 		<div class="calendar-spot">
-			<div id="yr-calendar-months-list">
-				<div class="month-item-header-list half-yearly">Julho</div>
-				<div class="month-item-header-list half-yearly">Agosto</div>
-				<div class="month-item-header-list half-yearly">Setembro</div>
-				<div class="month-item-header-list half-yearly">Outubro</div>
-				<div class="month-item-header-list half-yearly">Novembro</div>
-				<div class="month-item-header-list half-yearly">Dezembro</div>
+			<div id="yr-calendar-months-list" class="header-half-yearly">
 			</div>
 			<div id="yr-calendar-months-grid">
 				<div class="month-item-grid half-yearly"></div>

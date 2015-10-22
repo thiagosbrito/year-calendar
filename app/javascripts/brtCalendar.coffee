@@ -72,13 +72,15 @@
       if settings.view is 'calendar'
         if settings.period is 'yearly'
           $templateHeader.find('.yr-calendar-spot').append $templateCalendarYearly
+          buildDates()
         if settings.period is 'monthly'
           $templateHeader.find('.yr-calendar-spot').append $templateCalendarMonthly
-          buildDates()
         if settings.period is 'half-yearly'
           $templateHeader.find('.yr-calendar-spot').append $templateCalendarHalfYearly
+          buildDates()
         if settings.period is 'quarterly'
           $templateHeader.find('.yr-calendar-spot').append $templateCalendarQuarterly
+          buildDates()
       if settings.view is 'list'
         if settings.period is 'yearly'
           $templateHeader.find('.yr-calendar-spot').append $templateListYearly
@@ -94,11 +96,22 @@
           instantiateDatatables settings.period
 
     buildDates = ()=>
-      # if viewMode is 'quarterly'
+      if viewMode is 'quarterly'
         quarter = moment().quarter()
         months = listMonths.slice (quarter - 1)*3,quarter*3
         buildDatesTemplate(months)
         return
+
+      if viewMode is 'half-yearly'
+        quarter = moment().quarter()
+        half = if quarter <= 2 then 1 else 2
+        months = listMonths.slice (half - 1)*6,half*6
+        buildDatesTemplate(months)
+        return
+
+      if viewMode is 'yearly'
+        months = listMonths
+        buildDatesTemplate months
 
     buildDatesTemplate = (list)=>
       $(".header-#{viewMode}").empty()
@@ -148,29 +161,51 @@
       return
     verifyYear = (direction)->
 
-      # $prevEl = $('.prev')
-      # $nextEl = $('.next')
       validYear = yes
 
       numYear = parseInt $('#year-select > option:selected').html()
 
-      if $('.month-item-header-list').html() is 'janeiro' and numYear is minYear and direction is 'prev'
-        $('.prev').get(0).disabled = true
-        return validYear = no
+      if viewMode is 'monthly'
 
-      if $('.month-item-header-list').html() is 'dezembro' and numYear is maxYear and direction is 'next'
-        $('.next').get(0).disabled = true
-        return validYear = no
-          
+        if $('.month-item-header-list').html() is 'janeiro' and numYear is minYear and direction is 'prev'
+          $('.prev').get(0).disabled = true
+          return validYear = no
 
-      # if $('.month-item-header-list').html() is 'dezembro'
-      #   if numYear is maxYear
-      #     $('.next').get(0).disabled = true
-      #     validYear = no
+        if $('.month-item-header-list').html() is 'dezembro' and numYear is maxYear and direction is 'next'
+          $('.next').get(0).disabled = true
+          return validYear = no
+
+      if viewMode is 'quarterly'
+
+        if $('.header-quarterly').children().first().html() is 'janeiro' and numYear is minYear and direction is 'prev'
+          $('.prev').get(0).disabled = true
+          return validYear = no
+
+        if $('.header-quarterly').children().first().html() is 'outubro' and numYear is maxYear and direction is 'next'
+          $('.next').get(0).disabled = true
+          return validYear = no
+
+      if viewMode is 'half-yearly'
+        if $('.header-quarterly').children().first().html() is 'janeiro' and numYear is minYear and direction is 'prev'
+          $('.prev').get(0).disabled = true
+          return validYear = no
+
+        if $('.header-quarterly').children().first().html() is 'julho' and numYear is maxYear and direction is 'next'
+          $('.next').get(0).disabled = true
+          return validYear = no
+
+      if viewMode is 'yearly'
+        if numYear is minYear and direction is 'prev'
+          $('.prev').get(0).disabled = true
+          return validYear = no
+
+        if numYear is maxYear and direction is 'next'
+          $('.next').get(0).disabled = true
+          return validYear = no
 
       return validYear
 
-    adjustSelect = (month)=>
+    adjustSelect = (month, direction)=>
       min       = 0
       max       = 11
       index     = $('#year-select')[0].selectedIndex
@@ -189,7 +224,13 @@
           $('#year-select')[0].selectedIndex = index
 
       if viewMode is 'quarterly'
+        # console.log month
+        if direction is 'prev' and month is 6
+          $('#year-select')[0].selectedIndex = $('#year-select')[0].selectedIndex - 1
+        if direction is 'next' and month is 3
+          $('#year-select')[0].selectedIndex = $('#year-select')[0].selectedIndex + 1
 
+      if viewMode is 'half-yearly'
         console.log month
 
       return
@@ -207,7 +248,7 @@
             prevMonth = intMonth - 1
             stringMonth = moment().locale('pt-br').month(prevMonth).format('MMMM')
             $('.month-item-header-list').html(stringMonth)
-            adjustSelect prevMonth
+            adjustSelect prevMonth, direction
             $('.next').get(0).disabled = false
             $('.month-calendar').fullCalendar('prev')
 
@@ -218,37 +259,70 @@
             nextMonth = intMonth + 1
             stringMonth = moment().locale('pt-br').month(nextMonth).format('MMMM')
             $('.month-item-header-list').html(stringMonth)
-            adjustSelect nextMonth
+            adjustSelect nextMonth, direction
             $('.prev').get(0).disabled = false
             $('.month-calendar').fullCalendar('next')
 
       if viewMode is 'quarterly'
 
-        if direction is 'prev'
+        if verifyYear direction
 
-          firstMonthOfQuarter = moment().month($('.header-quarterly').children().first().html()).quarter()
-          pos = firstMonthOfQuarter - 1
-          if pos < 1
-            pos = 4
-          months = listMonths.slice (pos - 1)*3,pos*3
-          buildDatesTemplate(months)
-          month = $('.header-quarterly').children().first().html()
-          intMonth = parseInt moment().locale('pt-br').month(month).format('MM') - 1
-          prevMonth = intMonth - 3
-          adjustSelect prevMonth
+          if direction is 'prev'
+            $('.next').get(0).disabled = false
+            firstMonthOfQuarter = moment().month($('.header-quarterly').children().first().html()).quarter()
+            pos = firstMonthOfQuarter - 1
+            if pos < 1
+              pos = 4
+            months = listMonths.slice (pos - 1)*3,pos*3
+            buildDatesTemplate(months)
+            month = $('.header-quarterly').children().first().html()
+            intMonth = parseInt moment().locale('pt-br').month(month).format('MM') - 1
+            prevMonth = intMonth - 3
+            adjustSelect prevMonth, direction
 
-        if direction is 'next'
+          if direction is 'next'
+            $('.prev').get(0).disabled = false
+            firstMonthOfQuarter = moment().month($('.header-quarterly').children().first().html()).quarter()
+            pos = firstMonthOfQuarter + 1
+            if pos > 4
+              pos = 1
+            months = listMonths.slice (pos - 1)*3,pos*3
+            buildDatesTemplate(months)
+            month = $('.header-quarterly').children().first().html()
+            intMonth = parseInt(moment().locale('pt-br').month(month).format('MM')) - 1
+            nextMonth = intMonth + 3
+            adjustSelect nextMonth,direction
+      if viewMode is 'half-yearly'
 
-          firstMonthOfQuarter = moment().month($('.header-quarterly').children().first().html()).quarter()
-          pos = firstMonthOfQuarter + 1
-          if pos > 4
-            pos = 1
-          months = listMonths.slice (pos - 1)*3,pos*3
-          buildDatesTemplate(months)
-          month = $('.header-quarterly').children().first().html()
-          intMonth = parseInt(moment().locale('pt-br').month(month).format('MM')) - 1
-          nextMonth = intMonth + 3
-          adjustSelect nextMonth
+        if verifyYear direction
+
+          if direction is 'prev'
+
+            $('.prev').get(0).disabled = false
+            firstMonthOfQuarter = moment().month($('.header-half-yearly').children().first().html()).quarter()
+            pos = firstMonthOfQuarter + 1
+            if pos > 7
+              pos = 1
+            months = listMonths.slice (pos - 1)*6,pos*6
+            buildDatesTemplate(months)
+            month = $('.header-half-yearly').children().first().html()
+            intMonth = parseInt(moment().locale('pt-br').month(month).format('MM')) - 1
+            nextMonth = intMonth + 6
+            adjustSelect nextMonth,direction
+
+          if direction is 'next'
+
+            $('.next').get(0).disabled = false
+            firstMonthOfQuarter = moment().month($('.header-half-yearly').children().first().html()).quarter()
+            pos = firstMonthOfQuarter - 1
+            if pos < 1
+              pos = 7
+            months = listMonths.slice (pos - 1)*6,pos*6
+            buildDatesTemplate(months)
+            month = $('.header-half-yearly').children().first().html()
+            intMonth = parseInt moment().locale('pt-br').month(month).format('MM') - 1
+            prevMonth = intMonth - 6
+            adjustSelect prevMonth, direction
 
     # changes the view and re-render the proper template for each view
     renderView = (d)=>
@@ -262,9 +336,11 @@
         if d.data().control is 'view' and d.data('type') is 'calendar'
           if period is 'yearly'
             $templateHeader.find('.yr-calendar-spot').empty().append $templateCalendarYearly
+            buildDates()
             return
           if period is 'half-yearly'
             $templateHeader.find('.yr-calendar-spot').empty().append $templateCalendarHalfYearly
+            buildDates()
             return
           if period is 'quarterly'
             $templateHeader.find('.yr-calendar-spot').empty().append $templateCalendarQuarterly
@@ -305,8 +381,10 @@
         if view is 'calendar'
           if d.data().period is 'yearly'
             $templateHeader.find('.yr-calendar-spot').empty().append $templateCalendarYearly
+            buildDates()
           if d.data().period is 'half-yearly'
             $templateHeader.find('.yr-calendar-spot').empty().append $templateCalendarHalfYearly
+            buildDates()
           if d.data().period is 'quarterly'
             $templateHeader.find('.yr-calendar-spot').empty().append $templateCalendarQuarterly
             buildDates()
