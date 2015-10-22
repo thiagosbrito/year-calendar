@@ -236,6 +236,11 @@
         if direction is 'next' and month is 0
           $('#year-select')[0].selectedIndex = $('#year-select')[0].selectedIndex + 1
 
+      if viewMode is 'yearly'
+        if direction is 'prev'
+          $('#year-select')[0].selectedIndex = $('#year-select')[0].selectedIndex - 1
+        else
+          $('#year-select')[0].selectedIndex = $('#year-select')[0].selectedIndex + 1
       return
 
     navigateBetweenDates = (direction)=>
@@ -322,6 +327,13 @@
             intMonth = parseInt moment().locale('pt-br').month(month).format('MM') - 1
             prevMonth = intMonth
             adjustSelect prevMonth, direction
+      if viewMode is 'yearly'
+        if verifyYear direction
+          if direction is 'prev'
+            $('.next').get(0).disabled = false
+          else
+            $('.prev').get(0).disabled = false
+          adjustSelect null,direction
 
     # changes the view and re-render the proper template for each view
     renderView = (d)=>
