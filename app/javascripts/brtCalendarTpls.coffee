@@ -3,7 +3,7 @@ window.templates = {
 		<div id="yr-calendar-header" class="well clearfix no-radius affix-top">
 			<div class="span5">
 				<button class="btn nav-dates prev" data-direction="prev"><i class="icon-chevron-left"></i></button>
-				<select class="fix-select span3" id="year-select" onchange="changeYear(this.value)"></select>
+				<select class="fix-select span3" id="year-select"></select>
 				<button class="btn nav-dates next" data-direction="next"><i class="icon-chevron-right"></i></button>
 			</div>
 			<div class="span7">

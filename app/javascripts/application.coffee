@@ -78,7 +78,7 @@ $ ->
 
     $('.calendario-anual').brtCalendar({
       data: eventos,
-      gapYears: 20,
+      gapYears: 1,
       period: 'monthly',
       view: 'calendar'
     })
