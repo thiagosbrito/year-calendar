@@ -1,7 +1,7 @@
 (($) ->
 
   $.fn.brtCalendar = (options) ->
-    
+    rendering = false
     settings = $.extend({
       data: null
       view: null
@@ -60,6 +60,7 @@
       # by default the calendar its always open in a calendar view instead of list view
       $(this).append $templateHeader
 
+      showLoading()
       # remove active class for all buttons
       $templateHeader.find('.btn-yr-calendar').removeClass 'active'
       $templateHeader.find('.t-view').removeClass 'active'
@@ -73,27 +74,37 @@
         if settings.period is 'yearly'
           $templateHeader.find('.yr-calendar-spot').append $templateCalendarYearly
           buildDates()
+          hideLoading()
         if settings.period is 'monthly'
           $templateHeader.find('.yr-calendar-spot').append $templateCalendarMonthly
+          hideLoading()
         if settings.period is 'half-yearly'
           $templateHeader.find('.yr-calendar-spot').append $templateCalendarHalfYearly
           buildDates()
+          hideLoading()
         if settings.period is 'quarterly'
           $templateHeader.find('.yr-calendar-spot').append $templateCalendarQuarterly
           buildDates()
+          hideLoading()
       if settings.view is 'list'
         if settings.period is 'yearly'
           $templateHeader.find('.yr-calendar-spot').append $templateListYearly
           instantiateDatatables settings.period
+          hideLoading()
         if settings.period is 'monthly'
           $templateHeader.find('.yr-calendar-spot').append $templateListMonthly
           instantiateDatatables settings.period
+          hideLoading()
         if settings.period is 'half-yearly'
           $templateHeader.find('.yr-calendar-spot').append $templateListHalfYearly
           instantiateDatatables settings.period
+          hideLoading()
         if settings.period is 'quarterly'
           $templateHeader.find('.yr-calendar-spot').append $templateListQuarterly
           instantiateDatatables settings.period
+          hideLoading()
+
+    organizeEventsOnCalendarView = (data,period)=>
 
     buildDates = ()=>
       if viewMode is 'quarterly'
@@ -142,23 +153,81 @@
         bSearch: false
         bPaginate: false
         columns: [
-          { title: 'Nome',                  data: 'name'}
-          { title: 'Início',                data: 'begin'}
+          { title: 'Nome',                  data: 'nome'}
+          { title: 'Início',                data: 'start'}
           { title: 'Término',               data: 'end'}
-          { title: 'Projeto Institucional', data: 'institutional'}
-          { title: 'Multilinguagem' ,       data: 'multilanguage'}
-          { title: 'Atividades',            data: 'activities'}
+          { title: 'Projeto Institucional', data: 'institucional'}
+          { title: 'Multilinguagem' ,       data: 'linguagens'}
+          { title: 'Atividades',            data: 'atividades'}
           { title: 'Status',                data: 'status'}
         ]
       }
-    
+
       $('#list-'+period).DataTable(options)
 
-    instantiateFullcalendar = ()->
+
+    getMousePos = (tip)->
+
+
+    instantiateFullcalendar = ()=>
       $('.month-calendar').fullCalendar({
-        header: false
+        header: false,
+        events: settings.data
+        eventMouseover: (calEvent, event, view)->
+
+          $("#evento#{calEvent.id}").popover('show')
+
+          $('.fc-row').css('z-index',-1)
+
+          $popoverEl = $('.popover')
+          $eventEl   = $ event.target
+
+          left = event.pageX - ($popoverEl.width() / 2)
+          if left >= 940
+            left = 920
+          else if left <= 220
+            left = 240
+
+
+          topEventEl = $eventEl.offset().top
+          top = topEventEl - $popoverEl.height()
+
+          if top < 200
+            $("#evento#{calEvent.id}").siblings('.popover').removeClass('right')
+            $("#evento#{calEvent.id}").siblings('.popover').addClass('bottom')
+            $popoverEl.offset
+              left : left
+              top  : top + 140
+          else
+            $("#evento#{calEvent.id}").siblings('.popover').removeClass('right')
+            $("#evento#{calEvent.id}").siblings('.popover').addClass('top')
+            $popoverEl.offset
+              left : left
+              top  : top
+
+          popoverOpts = 
+            container: '.fc-view-container'
+            html: true
+            title: calEvent.title
+
+          $("#evento#{calEvent.id}").popover(popoverOpts)
+          return
+        eventMouseout: (ev,el,co)->
+          $("#evento#{ev.id}").popover('destroy')
+          $('.fc-row').css('z-index',1)
+          return
+        eventRender: (ev, el)->
+          el.attr "data-toogle","popover"
+          # el.attr "data-container","#yr-calendar-months-grid"
+          el.attr "data-content","#{ev.descricao}"
+          el.attr "data-original-title","#{ev.title}"
+          el.attr "id","evento#{ev.id}"
+          return
       })
       return
+
+    insertEventsIntoCalendar = ()=>
+      console.log 'c_UU_p'
     verifyYear = (direction)->
 
       validYear = yes
@@ -167,39 +236,39 @@
 
       if viewMode is 'monthly'
 
-        if $('.month-item-header-list').html() is 'janeiro' and numYear is minYear and direction is 'prev'
+        if $('.month-item-header-list').html() is 'janeiro' and numYear <= minYear and direction is 'prev'
           $('.prev').get(0).disabled = true
           return validYear = no
 
-        if $('.month-item-header-list').html() is 'dezembro' and numYear is maxYear and direction is 'next'
+        if $('.month-item-header-list').html() is 'dezembro' and numYear >= maxYear and direction is 'next'
           $('.next').get(0).disabled = true
           return validYear = no
 
       if viewMode is 'quarterly'
 
-        if $('.header-quarterly').children().first().html() is 'janeiro' and numYear is minYear and direction is 'prev'
+        if $('.header-quarterly').children().first().html() is 'janeiro' and numYear <= minYear and direction is 'prev'
           $('.prev').get(0).disabled = true
           return validYear = no
 
-        if $('.header-quarterly').children().first().html() is 'outubro' and numYear is maxYear and direction is 'next'
+        if $('.header-quarterly').children().first().html() is 'outubro' and numYear >= maxYear and direction is 'next'
           $('.next').get(0).disabled = true
           return validYear = no
 
       if viewMode is 'half-yearly'
-        if $('.header-half-yearly').children().first().html() is 'janeiro' and numYear is minYear and direction is 'prev'
+        if $('.header-half-yearly').children().first().html() is 'janeiro' and numYear <= minYear and direction is 'prev'
           $('.prev').get(0).disabled = true
           return validYear = no
 
-        if $('.header-half-yearly').children().first().html() is 'julho' and numYear is maxYear and direction is 'next'
+        if $('.header-half-yearly').children().first().html() is 'julho' and numYear >= maxYear and direction is 'next'
           $('.next').get(0).disabled = true
           return validYear = no
 
       if viewMode is 'yearly'
-        if numYear is minYear and direction is 'prev'
+        if numYear <= minYear and direction is 'prev'
           $('.prev').get(0).disabled = true
           return validYear = no
 
-        if numYear is maxYear and direction is 'next'
+        if numYear >= maxYear and direction is 'next'
           $('.next').get(0).disabled = true
           return validYear = no
 
@@ -301,9 +370,7 @@
             nextMonth = intMonth + 3
             adjustSelect nextMonth,direction
       if viewMode is 'half-yearly'
-
         if verifyYear direction
-
           if direction is 'prev'
 
             $('.next').get(0).disabled = false
@@ -327,6 +394,7 @@
             intMonth = parseInt moment().locale('pt-br').month(month).format('MM') - 1
             prevMonth = intMonth
             adjustSelect prevMonth, direction
+
       if viewMode is 'yearly'
         if verifyYear direction
           if direction is 'prev'
@@ -337,6 +405,12 @@
 
     # changes the view and re-render the proper template for each view
     renderView = (d)=>
+      showLoading()
+      $select = $('#year-select')[0]
+      $('.next').get(0).disabled = false
+      $('.prev').get(0).disabled = false
+      $select.selectedIndex = $('#year-select').find(":selected").index()
+
       if d.data().control is 'view'
 
         $templateHeader.find('.t-view').removeClass 'active'
@@ -348,18 +422,22 @@
           if period is 'yearly'
             $templateHeader.find('.yr-calendar-spot').empty().append $templateCalendarYearly
             buildDates()
+            hideLoading()
             return
           if period is 'half-yearly'
             $templateHeader.find('.yr-calendar-spot').empty().append $templateCalendarHalfYearly
             buildDates()
+            hideLoading()
             return
           if period is 'quarterly'
             $templateHeader.find('.yr-calendar-spot').empty().append $templateCalendarQuarterly
             buildDates()
+            hideLoading()
             return
           if period is 'monthly'
             $templateHeader.find('.yr-calendar-spot').empty().append $templateCalendarMonthly
             instantiateFullcalendar()
+            hideLoading()
             return
           return
           
@@ -367,18 +445,22 @@
           if period is 'yearly'
             $templateHeader.find('.yr-calendar-spot').empty().append $templateListYearly
             instantiateDatatables period
+            hideLoading()
             return
           if period is 'half-yearly'
             $templateHeader.find('.yr-calendar-spot').empty().append $templateListHalfYearly
             instantiateDatatables period
+            hideLoading()
             return
           if period is 'quarterly'
             $templateHeader.find('.yr-calendar-spot').empty().append $templateListQuarterly
             instantiateDatatables period
+            hideLoading()
             return
           if period is 'monthly'
             $templateHeader.find('.yr-calendar-spot').empty().append $templateListMonthly
             instantiateDatatables period
+            hideLoading()
             return
           return
 
@@ -393,35 +475,49 @@
           if d.data().period is 'yearly'
             $templateHeader.find('.yr-calendar-spot').empty().append $templateCalendarYearly
             buildDates()
+            hideLoading()
           if d.data().period is 'half-yearly'
             $templateHeader.find('.yr-calendar-spot').empty().append $templateCalendarHalfYearly
             buildDates()
+            hideLoading()
           if d.data().period is 'quarterly'
             $templateHeader.find('.yr-calendar-spot').empty().append $templateCalendarQuarterly
             buildDates()
+            hideLoading()
           if d.data().period is 'monthly'
             $templateHeader.find('.yr-calendar-spot').empty().append $templateCalendarMonthly
             instantiateFullcalendar()
+            hideLoading()
         if view is 'list'
           if d.data().period is 'yearly'
             $templateHeader.find('.yr-calendar-spot').empty().append $templateListYearly
             instantiateDatatables d.data().period
+            hideLoading()
           if d.data().period is 'half-yearly'
             $templateHeader.find('.yr-calendar-spot').empty().append $templateListHalfYearly
             instantiateDatatables d.data().period
+            hideLoading()
           if d.data().period is 'quarterly'
             $templateHeader.find('.yr-calendar-spot').empty().append $templateListQuarterly
             instantiateDatatables d.data().period
+            hideLoading()
           if d.data().period is 'monthly'
             $templateHeader.find('.yr-calendar-spot').empty().append $templateListMonthly
             instantiateDatatables d.data().period
+            hideLoading()
 
-
+    showLoading = ()->
+      $('.loading').show()
+      $('#yr-calendar-spot').addClass('blured')
+    hideLoading = ()->
+      $('.loading').hide()
+      $('#yr-calendar-spot').removeClass('blured')
     # binds button click
     listeners = () =>
       $templateHeader.find('button').click ()->
         d = $(@)
-        renderView d
+        if !d.data().direction
+          renderView d
         return
       $templateHeader.find('.nav-dates').click ()->
         b = $(@)
@@ -430,12 +526,17 @@
 
       return
 
+
+    getData = (data)->
+      # console.log data
+
     # init the plugin
     init = ->
       cacheDom()
       buildTemplate()
       buildDates()
       instantiateDatatables()
+      getData(settings.data)
       instantiateFullcalendar()
       listeners()
       createSelect()

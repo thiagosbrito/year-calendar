@@ -1,0 +1,57 @@
+[{
+  "id": 1,
+  "nome": "Evento 1 ",
+  "descricao": "descricao - Evento 1",
+  "dataPeriodo": {
+    "id": null,
+    "dataInicio": "01/07/2015 10:30",
+    "dataFim": "22/10/2015 23:30",
+    "diaInteiro": false,
+    "tecnicoNome": null,
+    "tecnicoId": null
+  },
+  "edicao": "edicao",
+  "cor": "#0033ff",
+  "linguagens": [1,2,3],
+  "atividadesDTO": [{"id": 4},{"id": 5}],
+  "institucional": true,
+  "status": "ATIVO"
+},
+{
+  "id": 2,
+  "nome": "Evento 2 ",
+  "descricao": "descricao - Evento 2",
+  "dataPeriodo": {
+    "id": null,
+    "dataInicio": "05/10/2015 06:00",
+    "dataFim": "06/12/2015 21:00",
+    "diaInteiro": false,
+    "tecnicoNome": null,
+    "tecnicoId": null
+  },
+  "edicao": "edicao",
+  "cor": "#FFCC00",
+  "linguagens": [1,2,3],
+  "atividadesDTO": [{"id": 4},{"id": 5}],
+  "institucional": true,
+  "status": "ATIVO"
+},
+{
+  "id": 3,
+  "nome": "Evento 3 ",
+  "descricao": "descricao - Evento 3",
+  "dataPeriodo": {
+    "id": null,
+    "dataInicio": "11/10/2015 07:00",
+    "dataFim": "22/10/2016 12:00",
+    "diaInteiro": false,
+    "tecnicoNome": null,
+    "tecnicoId": null
+  },
+  "edicao": "edicao",
+  "cor": "#FF00B3",
+  "linguagens": [1,2,3],
+  "atividadesDTO": [{"id": 4},{"id": 5}],
+  "institucional": true,
+  "status": "ATIVO"
+}]

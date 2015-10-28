@@ -1,38 +1,88 @@
-eventosYear = [
-  { name: "Teste 1", begin: "30/01/2015", end: "30/06/2016", color: '#c65a7a' , institutional: true , multilanguage: true, activities: 200, status: 'ativo'}
-  { name: "Teste 2", begin: "10/02/2015", end: "10/07/2016", color: '#eba825' , institutional: true , multilanguage: true, activities: 200, status: 'ativo'}
-  { name: "Teste 3", begin: "18/03/2015", end: "10/09/2015", color: '#7155fb' , institutional: true , multilanguage: true, activities: 200, status: 'ativo'}
-  { name: "Teste 4", begin: "30/09/2015", end: "10/12/2015", color: '#e153a5' , institutional: true , multilanguage: true, activities: 200, status: 'ativo'}
-  { name: "Teste 5", begin: "10/01/2015", end: "25/12/2015", color: '#e04d0a' , institutional: true , multilanguage: true, activities: 200, status: 'ativo'}
-]
-eventosHalfYear = [
-  { name: "Teste 1", begin: "01/07/2015", end: "30/02/2016", color: '#c65a7a' , institutional: true , multilanguage: true, activities: 200, status: 'ativo'}
-  { name: "Teste 2", begin: "01/08/2015", end: "10/12/2015", color: '#eba825' , institutional: true , multilanguage: true, activities: 200, status: 'ativo'}
-  { name: "Teste 3", begin: "01/09/2015", end: "22/11/2015", color: '#7155fb' , institutional: true , multilanguage: true, activities: 200, status: 'ativo'}
-  { name: "Teste 4", begin: "01/10/2015", end: "30/01/2016", color: '#e153a5' , institutional: true , multilanguage: true, activities: 200, status: 'ativo'}
-  { name: "Teste 5", begin: "01/11/2015", end: "25/03/2016", color: '#e04d0a' , institutional: true , multilanguage: true, activities: 200, status: 'ativo'}
-  { name: "Teste 5", begin: "01/12/2015", end: "31/12/2015", color: '#e04d0a' , institutional: true , multilanguage: true, activities: 200, status: 'ativo'}
-]
-eventosQuarter = [
-  { name: "Teste 1", begin: "01/10/2015", end: "20/02/2016", color: '#c65a7a' , institutional: true , multilanguage: true, activities: 200, status: 'ativo'}
-  { name: "Teste 2", begin: "02/06/2015", end: "10/10/2015", color: '#eba825' , institutional: true , multilanguage: true, activities: 200, status: 'ativo'}
-  { name: "Teste 3", begin: "18/03/2015", end: "22/10/2015", color: '#7155fb' , institutional: true , multilanguage: true, activities: 200, status: 'ativo'}
-]
-eventosMonth = [
-  { name: "Teste 1", begin: "10/10/2015", end: "30/02/2016", color: '#c65a7a' , institutional: true , multilanguage: true, activities: 200, status: 'ativo'}
-  { name: "Teste 2", begin: "02/06/2015", end: "10/10/2015", color: '#eba825' , institutional: true , multilanguage: true, activities: 200, status: 'ativo'}
-  { name: "Teste 3", begin: "18/03/2015", end: "22/10/2015", color: '#7155fb' , institutional: true , multilanguage: true, activities: 200, status: 'ativo'}
-  { name: "Teste 4", begin: "15/10/2015", end: "10/12/2015", color: '#e153a5' , institutional: true , multilanguage: true, activities: 200, status: 'ativo'}
-  { name: "Teste 5", begin: "20/02/2015", end: "25/12/2015", color: '#e04d0a' , institutional: true , multilanguage: true, activities: 200, status: 'ativo'}
-]
+# eventosYear = [
+#   { name: "Teste 1", begin: "30/01/2015", end: "30/06/2016", color: '#c65a7a' , institutional: true , multilanguage: true, activities: 200, status: 'ativo'}
+#   { name: "Teste 2", begin: "10/02/2015", end: "10/07/2016", color: '#eba825' , institutional: true , multilanguage: true, activities: 200, status: 'ativo'}
+#   { name: "Teste 3", begin: "18/03/2015", end: "10/09/2015", color: '#7155fb' , institutional: true , multilanguage: true, activities: 200, status: 'ativo'}
+#   { name: "Teste 4", begin: "30/09/2015", end: "10/12/2015", color: '#e153a5' , institutional: true , multilanguage: true, activities: 200, status: 'ativo'}
+#   { name: "Teste 5", begin: "10/01/2015", end: "25/12/2015", color: '#e04d0a' , institutional: true , multilanguage: true, activities: 200, status: 'ativo'}
+# ]
+# eventosHalfYear = [
+#   { name: "Teste 1", begin: "01/07/2015", end: "30/02/2016", color: '#c65a7a' , institutional: true , multilanguage: true, activities: 200, status: 'ativo'}
+#   { name: "Teste 2", begin: "01/08/2015", end: "10/12/2015", color: '#eba825' , institutional: true , multilanguage: true, activities: 200, status: 'ativo'}
+#   { name: "Teste 3", begin: "01/09/2015", end: "22/11/2015", color: '#7155fb' , institutional: true , multilanguage: true, activities: 200, status: 'ativo'}
+#   { name: "Teste 4", begin: "01/10/2015", end: "30/01/2016", color: '#e153a5' , institutional: true , multilanguage: true, activities: 200, status: 'ativo'}
+#   { name: "Teste 5", begin: "01/11/2015", end: "25/03/2016", color: '#e04d0a' , institutional: true , multilanguage: true, activities: 200, status: 'ativo'}
+#   { name: "Teste 5", begin: "01/12/2015", end: "31/12/2015", color: '#e04d0a' , institutional: true , multilanguage: true, activities: 200, status: 'ativo'}
+# ]
+# eventosQuarter = [
+#   { name: "Teste 1", begin: "01/10/2015", end: "20/02/2016", color: '#c65a7a' , institutional: true , multilanguage: true, activities: 200, status: 'ativo'}
+#   { name: "Teste 2", begin: "02/06/2015", end: "10/10/2015", color: '#eba825' , institutional: true , multilanguage: true, activities: 200, status: 'ativo'}
+#   { name: "Teste 3", begin: "18/03/2015", end: "22/10/2015", color: '#7155fb' , institutional: true , multilanguage: true, activities: 200, status: 'ativo'}
+# ]
+# eventosMonth = [
+#   { name: "Teste 1", begin: "10/10/2015", end: "30/02/2016", color: '#c65a7a' , institutional: true , multilanguage: true, activities: 200, status: 'ativo'}
+#   { name: "Teste 2", begin: "02/06/2015", end: "10/10/2015", color: '#eba825' , institutional: true , multilanguage: true, activities: 200, status: 'ativo'}
+#   { name: "Teste 3", begin: "18/03/2015", end: "22/10/2015", color: '#7155fb' , institutional: true , multilanguage: true, activities: 200, status: 'ativo'}
+#   { name: "Teste 4", begin: "15/10/2015", end: "10/12/2015", color: '#e153a5' , institutional: true , multilanguage: true, activities: 200, status: 'ativo'}
+#   { name: "Teste 5", begin: "20/02/2015", end: "25/12/2015", color: '#e04d0a' , institutional: true , multilanguage: true, activities: 200, status: 'ativo'}
+# ]
 
 $ ->
-  $('.calendario-anual').brtCalendar({
-    data: eventosYear,
-    gapYears: 1,
-    period: 'half-yearly',
-    view: 'calendar'
-  })
+  $.getJSON 'javascripts/json/data.json', (data) ->
+    
+    # { title: 'Nome',                  data: 'nome'}
+    # { title: 'Início',                data: 'dataPeriodo.dataInicio'}
+    # { title: 'Término',               data: 'dataPeriodo.dataFim'}
+    # { title: 'Projeto Institucional', data: 'institucional'}
+    # { title: 'Multilinguagem' ,       data: 'linguagem'}
+    # { title: 'Atividades',            data: 'atividadesDTO.length'}
+    # { title: 'Status',                data: 'status'}
+
+    # {
+    #   "id": 1,
+    #   "nome": "demodkdkdkd ",
+    #   "descricao": "descricao",
+    #   "dataPeriodo": {
+    #     "id": null,
+    #     "dataInicio": "14/10/2015 00:00",
+    #     "dataFim": "28/10/2015 00:00",
+    #     "diaInteiro": false,
+    #     "tecnicoNome": null,
+    #     "tecnicoId": null
+    #   },
+    #   "edicao": "edicao",
+    #   "cor": "#0033ff",
+    #   "linguagens": [1,2,3],
+    #   "atividadesDTO": [{"id": 4},{"id": 5}],
+    #   "institucional": true,
+    #   "status": "ATIVO"
+    # },
+
+    eventos = []
+    validaLinguagem = (item)->
+      if item.length > 1 or item.length is 0 then true else false
+
+
+    for item in data
+      eventos.push {
+        id: item.id
+        title: item.nome
+        start: moment(item.dataPeriodo.dataInicio,'DD/MM/YYYY hh:mm').format()
+        end: moment(item.dataPeriodo.dataFim,'DD/MM/YYYY hh:mm').format()
+        institucional: item.institucional
+        linguagens: validaLinguagem(item.linguagens)
+        atividades: item.atividadesDTO.length
+        status: item.status
+        descricao: item.descricao
+        color: item.cor
+      }
+
+    $('.calendario-anual').brtCalendar({
+      data: eventos,
+      gapYears: 20,
+      period: 'monthly',
+      view: 'calendar'
+    })
+    return
   return
 
 # # calcular o inicio de cada item
