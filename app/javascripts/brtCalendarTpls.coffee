@@ -51,7 +51,7 @@ window.templates = {
 		<div class="calendar-spot">
 			<div id="yr-calendar-months-list" class="header-yearly">
 			</div>
-			<div id="yr-calendar-months-grid">
+			<div id="yr-calendar-months-grid" class="yearly-grid">
 				<div class="month-item-grid yearly"></div>
 				<div class="month-item-grid yearly"></div>
 				<div class="month-item-grid yearly"></div>
@@ -65,7 +65,7 @@ window.templates = {
 				<div class="month-item-grid yearly"></div>
 				<div class="month-item-grid yearly"></div>
 			</div>
-			<div id="yr-calendar-schedules-canvas"></div>
+			<div id="yr-calendar-schedules-canvas" class="yearly-canvas-spot"></div>
 		</div>
 	',
 	# HALF YEAR CALENDAR
@@ -73,7 +73,7 @@ window.templates = {
 		<div class="calendar-spot">
 			<div id="yr-calendar-months-list" class="header-half-yearly">
 			</div>
-			<div id="yr-calendar-months-grid">
+			<div id="yr-calendar-months-grid" class="half-grid">
 				<div class="month-item-grid half-yearly"></div>
 				<div class="month-item-grid half-yearly"></div>
 				<div class="month-item-grid half-yearly"></div>
@@ -81,19 +81,19 @@ window.templates = {
 				<div class="month-item-grid half-yearly"></div>
 				<div class="month-item-grid half-yearly"></div>
 			</div>
-			<div id="yr-calendar-schedules-canvas"></div>
+			<div id="yr-calendar-schedules-canvas" class="half-canvas-spot"></div>
 		</div>
 	'
 	# QUARTER CALENDAR
 	'calendar-quarterly' 	: '
 		<div class="calendar-spot">
 			<div id="yr-calendar-months-list" class="header-quarterly"></div>
-			<div id="yr-calendar-months-grid">
+			<div id="yr-calendar-months-grid" class="quarter-grid">
 				<div class="month-item-grid quarterly"></div>
 				<div class="month-item-grid quarterly"></div>
 				<div class="month-item-grid quarterly"></div>
 			</div>
-			<div id="yr-calendar-schedules-canvas"></div>
+			<div id="yr-calendar-schedules-canvas" class="quarter-canvas-spot"></div>
 		</div>
 	'
 	# MONTH CALENDAR

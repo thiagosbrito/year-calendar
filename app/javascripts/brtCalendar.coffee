@@ -18,6 +18,7 @@
       @selectedQuarter  = CUR_QUARTER
       @selectedHalf     = CUR_HALF
       @container        = $container
+      @events           = @settings.data
 
       @render()
 
@@ -189,22 +190,188 @@
       day= 1
       goToDate = moment("#{day}/#{month}/#{year}","DD/MM/YYYY")
       @DOMElements.$fullCalendarContent.fullCalendar 'gotoDate',goToDate
+      @selectedYear = year
+      switch @viewMode
+        when 'yearly'
+          @getDataForYear()
+        when 'half-yearly'
+          @getDataForHalf()
+        when 'quarterly'
+          @getDataForQuarter()
 
-    createFullCalendar: ->
-      @DOMElements.$fullCalendarContent.html ''
-      @DOMElements.$fullCalendarContent.fullCalendar({
-        header: false,
-        events: @settings.data
-        eventMouseover: (calEvent, event, view)=>
-          @createPopover calEvent,event
-        eventMouseout: (ev,el,co)=>
-          @removePopover(ev)
-        eventRender: (ev, el)->
-          el.attr "data-toogle","popover"
-          el.attr "data-content","#{ev.descricao}"
-          el.attr "data-original-title","#{ev.title}"
-          el.attr "id","evento#{ev.id}"
-      })
+    createFullCalendar: (rerender)->
+      if !rerender
+        @DOMElements.$fullCalendarContent.html ''
+        @DOMElements.$fullCalendarContent.fullCalendar({
+          header: false,
+          events: @events
+          eventMouseover: (calEvent, event, view)=>
+            @createPopover calEvent,event
+          eventMouseout: (ev,el,co)=>
+            @removePopover(ev)
+          eventRender: (ev, el)->
+            el.attr "data-toogle","popover"
+            el.attr "data-content","#{ev.descricao}"
+            el.attr "data-original-title","#{ev.title}"
+            el.attr "id","evento#{ev.id}"
+        })
+      else
+        @DOMElements.$fullCalendarContent.fullCalendar('rerenderEvents')
+    
+    getDataForHalf    : ->
+      holder = $('#yr-calendar-schedules-canvas')
+      holder.html ''
+      monthColumns  = $('#yr-calendar-months-grid').children()
+      
+      
+      for item, key in @events
+        
+        infoInit  = moment(item.start).format('DD/MM/YYYY').split "/"
+        infoEnd   = moment(item.end).format('DD/MM/YYYY').split "/" 
+
+        # 
+        dayInit   = infoInit[0]
+        monthInit = moment().month(parseInt(infoInit[1])-1).format('MMMM')
+        yearInit  = infoInit[2]
+        # 
+        dayEnd   = infoEnd[0]
+        monthEnd = moment().month(parseInt(infoEnd[1])-1).format('MMMM')
+        yearEnd  = infoEnd[2]
+        # 
+        dayWidth      = $('.half-grid').children().width() / moment().month(monthInit).daysInMonth()
+        monthWidth    = $('.half-grid').children().width()
+        
+
+        if $('.month-item-header-list:contains(' + monthInit + ')').length > 0 and parseInt(yearInit) is @selectedYear
+          initPosition = $('.month-item-header-list:contains(' + monthInit + ')').position().left + parseInt(dayInit) * dayWidth - 1
+        else
+          initPosition = 0
+        if $('.month-item-header-list:contains(' + monthEnd + ')').length > 0 and parseInt(yearEnd) is @selectedYear
+          endPosition = $('.month-item-header-list:contains(' + monthEnd + ')').position().left + parseInt(dayEnd) * dayWidth - 1
+        else
+          endPosition = 940
+        
+        size = endPosition - initPosition
+
+        holder.append "
+          <div class='item'
+            id='calendar-item-#{key}'
+            data-toggle='popover'
+            data-content='Data de inicio: #{moment(item.start).format('DD/MM/YYYY')} <br> Data de Encerramento: #{moment(item.end).format('DD/MM/YYYY')}'
+            data-original-title='#{item.title}'
+            style='background-color: #{item.color}; width: #{size}px; left: #{initPosition}px'>
+              &nbsp;
+          </div>
+          "
+    
+    getDataForQuarter : ->
+      holder = $('#yr-calendar-schedules-canvas')
+      holder.html ''
+      monthColumns  = $('#yr-calendar-months-grid').children()
+      
+      
+      for item, key in @events
+        
+
+
+        infoInit  = moment(item.start).format('DD/MM/YYYY').split "/"
+        infoEnd   = moment(item.end).format('DD/MM/YYYY').split "/" 
+
+        # 
+        dayInit   = infoInit[0]
+        monthInit = moment().month(parseInt(infoInit[1])-1).format('MMMM')
+        yearInit  = infoInit[2]
+        # 
+        dayEnd   = infoEnd[0]
+        monthEnd = moment().month(parseInt(infoEnd[1])-1).format('MMMM')
+        yearEnd  = infoEnd[2]
+        # 
+        dayWidth      = $('.quarter-grid').children().width() / moment().month(monthInit).daysInMonth()
+        monthWidth    = $('.quarter-grid').children().width()
+        
+
+        if $('.month-item-header-list:contains(' + monthInit + ')').length > 0 and parseInt(yearInit) is @selectedYear
+          initPosition = $('.month-item-header-list:contains(' + monthInit + ')').position().left + parseInt(dayInit) * dayWidth - 1
+        else
+          initPosition = 0
+        if $('.month-item-header-list:contains(' + monthEnd + ')').length > 0 and parseInt(yearEnd) is @selectedYear
+          endPosition = $('.month-item-header-list:contains(' + monthEnd + ')').position().left + parseInt(dayEnd) * dayWidth - 1
+        else
+          endPosition = 940
+        
+        size = endPosition - initPosition
+        
+        holder.append "
+          <div class='item'
+            id='calendar-item-#{key}'
+            data-toggle='popover'
+            data-content='Data de inicio: #{moment(item.start).format('DD/MM/YYYY')} <br> Data de Encerramento: #{moment(item.end).format('DD/MM/YYYY')}'
+            data-original-title='#{item.title}'
+            style='background-color: #{item.color}; width: #{size}px; left: #{initPosition}px'>
+              &nbsp;
+          </div>
+          "
+    formatDates: (item)->
+      if item
+        inicio  = moment(item.start).format('YYYY-MM-DD')
+        fim     = moment(item.end).format('YYYY-MM-DD')
+        return [inicio,fim]
+    getDataForYear    : ->
+      holder = $('#yr-calendar-schedules-canvas')
+      holder.html ''
+      
+      monthColumns  = $('#yr-calendar-months-grid').children()
+      
+      firstMonth        = moment().month($('#yr-calendar-months-list').children().first().text()).format('MM')
+      lastMonth         = moment().month($('#yr-calendar-months-list').children().last().text()).format('MM')
+      lastDayLastMonth  = moment().month(lastMonth).daysInMonth()
+
+      curInitDate = "#{@selectedYear}-#{firstMonth}-01"
+      curEndDate  = "#{@selectedYear}-#{lastMonth}-#{lastDayLastMonth}"
+      
+      for item, key in @events
+        
+        dates = @formatDates item
+
+        infoInit      = moment(item.start).format('DD/MM/YYYY').split "/"
+        infoEnd       = moment(item.end).format('DD/MM/YYYY').split "/" 
+
+        # 
+        dayInit       = infoInit[0]
+        monthInit     = infoInit[1]
+        yearInit      = infoInit[2]
+        # 
+        dayEnd        = infoEnd[0]
+        monthEnd      = infoEnd[1]
+        yearEnd       = infoEnd[2]
+        # 
+        dayWidth      = $('.yearly-grid').children().width() / moment().month(monthInit).daysInMonth()
+        monthWidth    = $('.yearly-grid').children().width()
+        color         = item.color
+        
+
+        if parseInt(yearInit) is @selectedYear
+          initPosition = $(monthColumns[parseInt(monthInit)-1]).position().left + (parseInt(dayInit) * dayWidth) - 1 
+        else
+          initPosition = 0
+        if parseInt(yearEnd) is @selectedYear
+          endPosition = $(monthColumns[parseInt(monthEnd)-1]).position().left + (parseInt(dayEnd) * dayWidth) - 1
+        else
+          endPosition = 940        
+      
+        size = endPosition - initPosition
+
+        init = moment(item.start).format('YYYY-MM-DD')
+
+        holder.append "<div class='item'
+            id='calendar-item-#{key}'
+            data-toggle='popover'
+            data-content='Data de inicio: #{moment(item.start).format('DD/MM/YYYY')} <br> Data de Encerramento: #{moment(item.end).format('DD/MM/YYYY')}'
+            data-original-title='#{item.title}'
+            style='background-color: #{item.color}; width: #{size}px; left: #{initPosition}px'>
+            &nbsp;
+          </div>"
+
     verifyYear: (direction)->
       validYear = yes
       numYear = @selectedYear
@@ -322,6 +489,7 @@
               pos = --@selectedQuarter
               months = LIST_MONTHS.slice (pos - 1)*3,pos*3
               @buildDatesTemplate months
+              @getDataForQuarter()
               
 
             if direction is 'next'
@@ -332,6 +500,7 @@
               pos = ++@selectedQuarter
               months = LIST_MONTHS.slice (pos - 1)*3,pos*3
               @buildDatesTemplate months
+              @getDataForQuarter()
 
         when 'half-yearly'
           if @verifyYear direction
@@ -342,6 +511,7 @@
               months = LIST_MONTHS.slice (@selectedHalf - 1)*6,@selectedHalf*6
               @buildDatesTemplate months
               @adjustSelect null,direction
+              @getDataForHalf()
 
             if direction is 'next'
 
@@ -352,13 +522,16 @@
               @buildDatesTemplate months
               
               @adjustSelect null, direction
+              @getDataForHalf()
 
         when 'yearly'
           if @verifyYear direction
             if direction is 'prev'
               $('.next').prop('disabled',no)
+              @getDataForYear()
             else
               $('.prev').prop('disabled',no)
+              @getDataForYear()
             @adjustSelect null,direction
     renderView: (d)->
       
@@ -383,21 +556,24 @@
             if period is 'yearly'
               @DOMElements.$templateHeader.find('.yr-calendar-spot').empty().append @DOMElements.$templateCalendarYearly
               @buildDates()
+              @getDataForYear()
               return
 
             if period is 'half-yearly'
               @DOMElements.$templateHeader.find('.yr-calendar-spot').empty().append @DOMElements.$templateCalendarHalfYearly
               @buildDates()
+              @getDataForHalf()
               return
 
             if period is 'quarterly'
               @DOMElements.$templateHeader.find('.yr-calendar-spot').empty().append @DOMElements.$templateCalendarQuarterly
               @buildDates()
+              @getDataForQuarter()
               return
 
             if period is 'monthly'
               @DOMElements.$templateHeader.find('.yr-calendar-spot').empty().append @DOMElements.$templateCalendarMonthly
-              @createFullCalendar()
+              @createFullCalendar(true)
               return
 
             return
@@ -432,15 +608,18 @@
             if d.data().period is 'yearly'
               @DOMElements.$templateHeader.find('.yr-calendar-spot').empty().append @DOMElements.$templateCalendarYearly
               @buildDates()
+              @getDataForYear()
             if d.data().period is 'half-yearly'
               @DOMElements.$templateHeader.find('.yr-calendar-spot').empty().append @DOMElements.$templateCalendarHalfYearly
               @buildDates()
+              @getDataForHalf()
             if d.data().period is 'quarterly'
               @DOMElements.$templateHeader.find('.yr-calendar-spot').empty().append @DOMElements.$templateCalendarQuarterly
               @buildDates()
+              @getDataForQuarter()
             if d.data().period is 'monthly'
               @DOMElements.$templateHeader.find('.yr-calendar-spot').empty().append @DOMElements.$templateCalendarMonthly
-              @createFullCalendar()
+              @createFullCalendar(true)
           if view is 'list'
             if d.data().period is 'yearly'
               @DOMElements.$templateHeader.find('.yr-calendar-spot').empty().append @DOMElements.$templateListYearly
@@ -461,13 +640,16 @@
         d = $(@)
         if !d.data().direction
           self.renderView d
+          event.stopPropagation()
         return
       @DOMElements.$templateHeader.find('.nav-dates').click ()->
         b = $(@)
         self.navigateBetweenDates b.data().direction
+        event.stopPropagation();
         return
       @DOMElements.$selectYear.change ()->
         self.changeYear()
+        event.stopPropagation();
       return
 
   }
