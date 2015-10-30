@@ -1,6 +1,6 @@
 $ ->
   $.getJSON 'javascripts/json/data.json', (data) ->
-    
+
     eventos = []
     
     validaLinguagem = (item)->
@@ -23,6 +23,6 @@ $ ->
     $('.calendario-anual').brtCalendar({
       data: eventos,
       gapYears: 20,
-      period: 'monthly',
+      period: 'monthly', # THE AVAILABLE OPTIONS ARE: yearly, monthly, half-yearly or quarterly
       view: 'calendar'
     })
