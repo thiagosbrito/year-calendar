@@ -230,6 +230,12 @@
       holder.html ''
       monthColumns  = $('#yr-calendar-months-grid').children()
       
+      firstMonth        = moment().month($('#yr-calendar-months-list').children().first().text()).format('MM')
+      lastMonth         = moment().month($('#yr-calendar-months-list').children().last().text()).format('MM')
+      lastDayLastMonth  = moment().month(lastMonth).daysInMonth()
+
+      curInitDate = "#{@selectedYear}-#{firstMonth}-01"
+      curEndDate  = "#{@selectedYear}-#{lastMonth}-#{lastDayLastMonth}"
       
       for item, key in @events
         
@@ -248,7 +254,6 @@
         dayWidth      = $('.half-grid').children().width() / moment().month(monthInit).daysInMonth()
         monthWidth    = $('.half-grid').children().width()
         
-
         if $('.month-item-header-list:contains(' + monthInit + ')').length > 0 and parseInt(yearInit) is @selectedYear
           initPosition = $('.month-item-header-list:contains(' + monthInit + ')').position().left + parseInt(dayInit) * dayWidth - 1
         else
@@ -260,22 +265,36 @@
         
         size = endPosition - initPosition
 
-        holder.append "
-          <div class='item'
-            id='calendar-item-#{key}'
-            data-toggle='popover'
-            data-content='Data de inicio: #{moment(item.start).format('DD/MM/YYYY')} <br> Data de Encerramento: #{moment(item.end).format('DD/MM/YYYY')}'
-            data-original-title='#{item.title}'
-            style='background-color: #{item.color}; width: #{size}px; left: #{initPosition}px'>
+        if moment(moment(item.start).format('YYYY-MM-DD')).isBetween(curInitDate, curEndDate) or moment(moment(item.end).format('YYYY-MM-DD')).isBetween(curInitDate, curEndDate) or (moment(curInitDate).isAfter(moment(item.start).format('YYYY-MM-DD')) and moment(curEndDate).isBefore(moment(item.end).format('YYYY-MM-DD'))) or moment(curInitDate).isSame(moment(item.start).format('YYYY-MM-DD')) or moment(curEndDate).isSame(moment(item.end).format('YYYY-MM-DD'))
+            holder.append "
+              <div class='item'
+                id='calendar-item-#{key}'
+                data-toggle='popover'
+                data-content='Data de inicio: #{moment(item.start).format('DD/MM/YYYY')} <br> Data de Encerramento: #{moment(item.end).format('DD/MM/YYYY')}'
+                data-original-title='#{item.title}'
+                style='background-color: #{item.color}; width: #{size}px; left: #{initPosition}px'>
+                  &nbsp;
+              </div>"
+        else
+          holder.append "<div class='item'
+              id='calendar-item-#{key}'
+              data-toggle='popover'
+              data-content='Data de inicio: #{moment(item.start).format('DD/MM/YYYY')} <br> Data de Encerramento: #{moment(item.end).format('DD/MM/YYYY')}'
+              data-original-title='#{item.title}'
+              style='background-color: transparent; width: #{size}px; left: #{initPosition}px'>
               &nbsp;
-          </div>
-          "
-    
+            </div>"
     getDataForQuarter : ->
       holder = $('#yr-calendar-schedules-canvas')
       holder.html ''
       monthColumns  = $('#yr-calendar-months-grid').children()
       
+      firstMonth        = moment().month($('#yr-calendar-months-list').children().first().text()).format('MM')
+      lastMonth         = moment().month($('#yr-calendar-months-list').children().last().text()).format('MM')
+      lastDayLastMonth  = moment().month(lastMonth).daysInMonth()
+
+      curInitDate = "#{@selectedYear}-#{firstMonth}-01"
+      curEndDate  = "#{@selectedYear}-#{lastMonth}-#{lastDayLastMonth}"
       
       for item, key in @events
         
@@ -295,6 +314,8 @@
         # 
         dayWidth      = $('.quarter-grid').children().width() / moment().month(monthInit).daysInMonth()
         monthWidth    = $('.quarter-grid').children().width()
+
+        
         
 
         if $('.month-item-header-list:contains(' + monthInit + ')').length > 0 and parseInt(yearInit) is @selectedYear
@@ -308,16 +329,24 @@
         
         size = endPosition - initPosition
         
-        holder.append "
-          <div class='item'
-            id='calendar-item-#{key}'
-            data-toggle='popover'
-            data-content='Data de inicio: #{moment(item.start).format('DD/MM/YYYY')} <br> Data de Encerramento: #{moment(item.end).format('DD/MM/YYYY')}'
-            data-original-title='#{item.title}'
-            style='background-color: #{item.color}; width: #{size}px; left: #{initPosition}px'>
+        if moment(moment(item.start).format('YYYY-MM-DD')).isBetween(curInitDate, curEndDate) or moment(moment(item.end).format('YYYY-MM-DD')).isBetween(curInitDate, curEndDate) or (moment(curInitDate).isAfter(moment(item.start).format('YYYY-MM-DD')) and moment(curEndDate).isBefore(moment(item.end).format('YYYY-MM-DD'))) or moment(curInitDate).isSame(moment(item.start).format('YYYY-MM-DD')) or moment(curEndDate).isSame(moment(item.end).format('YYYY-MM-DD'))
+          holder.append "<div class='item'
+              id='calendar-item-#{key}'
+              data-toggle='popover'
+              data-content='Data de inicio: #{moment(item.start).format('DD/MM/YYYY')} <br> Data de Encerramento: #{moment(item.end).format('DD/MM/YYYY')}'
+              data-original-title='#{item.title}'
+              style='background-color: #{item.color}; width: #{size}px; left: #{initPosition}px'>
               &nbsp;
-          </div>
-          "
+            </div>"
+        else
+          holder.append "<div class='item'
+              id='calendar-item-#{key}'
+              data-toggle='popover'
+              data-content='Data de inicio: #{moment(item.start).format('DD/MM/YYYY')} <br> Data de Encerramento: #{moment(item.end).format('DD/MM/YYYY')}'
+              data-original-title='#{item.title}'
+              style='background-color: transparent; width: #{size}px; left: #{initPosition}px'>
+              &nbsp;
+            </div>"
     formatDates       : (item)->
 
       if item
@@ -371,13 +400,22 @@
         endPosition = 940
       
       size = endPosition - initPosition
-      if moment(moment(item.start).format('YYYY-MM-DD')).isBetween(curInitDate, curEndDate) or moment(moment(item.end).format('YYYY-MM-DD')).isBetween(curInitDate, curEndDate)
+      if moment(moment(item.start).format('YYYY-MM-DD')).isBetween(curInitDate, curEndDate) or moment(moment(item.end).format('YYYY-MM-DD')).isBetween(curInitDate, curEndDate) or (moment(curInitDate).isAfter(moment(item.start).format('YYYY-MM-DD')) and moment(curEndDate).isBefore(moment(item.end).format('YYYY-MM-DD'))) or moment(curInitDate).isSame(moment(item.start).format('YYYY-MM-DD')) or moment(curEndDate).isSame(moment(item.end).format('YYYY-MM-DD'))
         holder.append "<div class='item'
             id='calendar-item-#{key}'
             data-toggle='popover'
             data-content='Data de inicio: #{moment(item.start).format('DD/MM/YYYY')} <br> Data de Encerramento: #{moment(item.end).format('DD/MM/YYYY')}'
             data-original-title='#{item.title}'
             style='background-color: #{item.color}; width: #{size}px; left: #{initPosition}px'>
+            &nbsp;
+          </div>"
+      else
+        holder.append "<div class='item'
+            id='calendar-item-#{key}'
+            data-toggle='popover'
+            data-content='Data de inicio: #{moment(item.start).format('DD/MM/YYYY')} <br> Data de Encerramento: #{moment(item.end).format('DD/MM/YYYY')}'
+            data-original-title='#{item.title}'
+            style='background-color: transparent; width: #{size}px; left: #{initPosition}px'>
             &nbsp;
           </div>"
 
@@ -544,11 +582,12 @@
           if @verifyYear direction
             if direction is 'prev'
               $('.next').prop('disabled',no)
+              @adjustSelect null,direction
               @getDataForYear()
             else
               $('.prev').prop('disabled',no)
+              @adjustSelect null,direction
               @getDataForYear()
-            @adjustSelect null,direction
     renderView: (d)->
       
       
